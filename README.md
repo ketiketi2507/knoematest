@@ -8,8 +8,9 @@ This is the official documentation for Knoema's R Package. The package can be us
 To install the [devtools](https://cran.r-project.org/package=devtools) package:
 
     install.packages("devtools")
-    library(devtools)
+    library("devtools")
     install_github("ketiketi2507/knoematest") //NEED TO CHANGE WHEN WILL BE NOT TEST VERSION
+    library("knoematest")
                 
 # Authentication
 By default the package allows you to work only with public datasets from the site knoema.com.
