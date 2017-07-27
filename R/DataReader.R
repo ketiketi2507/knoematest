@@ -11,6 +11,7 @@
 #' @importFrom zoo as.yearqtr
 #' @importFrom zoo as.zooreg
 #' @importFrom zoo zoo
+#' @importFrom zoo as.zoo
 
 
 DataReader <- function(client, dataset, selection){
