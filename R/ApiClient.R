@@ -56,7 +56,14 @@ ApiClient <- function(host="knoema.com", app_id = "",app_secret = "") {
       response <- GET(url, add_headers("Content-Type"="application/json"))
     else
       response <- GET(url, add_headers("Content-Type"="application/json", "Authorization"= auth))
-
+    if (http_error(response))
+    {
+      if (response$status_code == 403)
+        e <- simpleError("The number of requests for /api/meta/dataset/id exceeds 50")
+      else
+        e <- simpleError(http_status(response)$message)
+      stop(e)
+    }
     res = content(response, as = "parsed");
     return (res)
   }
@@ -68,6 +75,14 @@ ApiClient <- function(host="knoema.com", app_id = "",app_secret = "") {
       p <- POST(url, content_type("application/json"), body = request, encode = "json")
     else
       p <- POST(url,content_type("application/json"),add_headers("Authorization"= auth), body = request,encode = "json")
+    if (http_error(p))
+    {
+      if (p$status_code == 403)
+        e <- simpleError("The number of requests for /api/meta/dataset/id exceeds 50")
+      else
+        e <- simpleError(http_status(p)$message)
+      stop(e)
+    }
     res <- content(p, as = "parsed")
     return(res)
   }
