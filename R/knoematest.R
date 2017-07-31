@@ -24,7 +24,7 @@ knoema.get <- function(datasetId, selection,type="ts",client = ApiClient())
   }
   if (is.null(dataset))
   {
-    error = simpleError('You have incorrect parameters app_id or app_secret')
+    error = simpleError('Your apiclient has incorrect parameters app_id or app_secret')
     stop(error)
   }    
   data_reader <- DataReader(client,dataset,selection)
