@@ -15,15 +15,6 @@
 
 
 DataReader <- function(client, dataset, selection){
-  if (is.null(dataset))
-  {
-     if (is.null(dataset))
-    {
-        error <- simpleError('The dataset did not download')
-        stop(error)
-    }
-  }
-
   reader <- list(
     client = client,
     dataset = Dataset(dataset),
