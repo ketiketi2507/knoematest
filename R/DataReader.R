@@ -17,8 +17,11 @@
 DataReader <- function(client, dataset, selection){
   if (is.null(dataset))
   {
-    error <- 'The dataset did not download'
-    stop(error)
+     if (is.null(dataset))
+    {
+        error <- simpleError('The dataset did not download')
+        stop(error)
+    }
   }
 
   reader <- list(
@@ -50,10 +53,10 @@ DataReader <- function(client, dataset, selection){
     list.condition <- sapply(dims, function(x) ! x %in% dims_from_filter)
     out_of_filter_dim_names <- dims[list.condition]
     if (length (out_of_filter_dim_names)>0)
-    {
-      error <- 'The following dimension(s) are not set: %1s'
-      stop(sprintf(error,paste(out_of_filter_dim_names, sep = "", collapse = ",")))
-    }
+        {
+            error <- simpleError(sprintf('The following dimension(s) are not set: %1s',paste(out_of_filter_dim_names,sep="", collapse =",")))
+            stop(error)
+        }
   }
 
 
@@ -61,10 +64,10 @@ DataReader <- function(client, dataset, selection){
     members <- c()
     for (value in splited_values)
     {
-      if (is.null(value))
-      {
-        error <- 'Selection for dimension %1s is empty'
-        stop(sprintf(error, dim$name))
+     if (is.null(value))
+     {
+        error <- simpleError(sprintf('Selection for dimension %1s is empty',dim$name))
+        stop(error)
       }
       member <- dim$findmember_by_id(value)
       if (is.null(member))
@@ -83,8 +86,8 @@ DataReader <- function(client, dataset, selection){
     list_err <- values[list_condition]
     if (length(list_err)>0)
     {
-      error <- 'The following frequencies are not correct: %1s'
-      stop(sprintf(error,paste(list_err, sep = "", collapse = ",")))
+      error <- simpleError(sprintf('The following frequencies are not correct: %1s',paste(list_err,sep="", collapse =",")))
+      stop(error)
     }
     return (TRUE)
   }
@@ -113,16 +116,16 @@ DataReader <- function(client, dataset, selection){
       dim <- reader$find_dmension(item)
       if (is.null(dim))
       {
-        error <- 'Dimension with id or name %1s is not found'
-        stop(sprintf(error, item))
+         error <- simpleError(sprintf('Dimension with id or name %1s is not found',item))
+         stop(error)
       }
       filter_dims <- c(filter_dims,dim)
       dim2 <- Dimension(reader$client$get_dimension(reader$dataset$id, dim$id))
       members <- reader$get_dim_members(dim2, splited_values)
       if (length(members) == 0)
       {
-        error <- 'Selection for dimension %1s is empty'
-        stop(sprintf(error, dim$name))
+        e = simpleError(sprintf('Selection for dimension %1s is empty',dim$name))
+        stop(e)
       }
       l <- c(request$get('stub'),PivotItem(dim$id, members))
       request$set('stub', l)
@@ -232,7 +235,7 @@ DataReader <- function(client, dataset, selection){
     series <- list()
     if (length(resp$data) == 0)
     {
-      warning("Dataset do not have data by this selection")
+      warning(simpleError("Dataset do not have data by this selection"))
       return (series)
     }
     else
