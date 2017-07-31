@@ -22,6 +22,11 @@ knoema.get <- function(datasetId, selection,type="ts",client = ApiClient())
     error = simpleError(dataset)
     stop(error)
   }
+  if (is.null(dataset))
+  {
+    error = simpleError('Your user does not have access to a private dataset. Check your settings app_id and app_secret')
+    stop(error)
+  }    
   data_reader <- DataReader(client,dataset,selection)
   series <- data_reader$get_frame(type)
   return (series)
