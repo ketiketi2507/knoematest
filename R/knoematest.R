@@ -17,6 +17,11 @@
 knoema.get <- function(datasetId, selection,type="ts",client = ApiClient())
 {
   dataset <- client$get_dataset(datasetId)
+  if (is.character(dataset))
+  {
+    error = simpleError(dataset)
+    stop(error)
+  }
   data_reader <- DataReader(client,dataset,selection)
   series <- data_reader$get_frame(type)
   return (series)
