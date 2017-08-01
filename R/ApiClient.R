@@ -20,6 +20,8 @@
 #' @importFrom httr add_headers
 #' @importFrom httr content
 #' @importFrom httr content_type
+#' @importFrom httr http_error
+#' @importFrom httr http_status
 
 ApiClient <- function(host="knoema.com", app_id = "",app_secret = "") {
   client = list(
