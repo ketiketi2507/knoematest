@@ -14,6 +14,7 @@ Imports: httr,
     base64enc,
     digest,
     lubridate,
-    xts
+    xts,
+    zoo
 RoxygenNote: 6.0.1
 Suggests: testthat
